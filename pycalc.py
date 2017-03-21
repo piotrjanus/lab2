@@ -1,13 +1,7 @@
 import abc
 from math import log
-
-class notIntNotFloat(Exception):
-	def __str__(self):
-		return repr("not int nor float")
-
-class divisionByZero(Exception):
-	def __str__(self):
-		return repr("division by zero!")
+from calcExceptions import *
+from scipy.misc import derivative
 
 class abstractCalc(object):
 	__metaclass__  = abc.ABCMeta
@@ -20,10 +14,13 @@ class abstractCalc(object):
 		pass
 
 	@abc.abstractmethod
-	def ln(self, x, y):
+	def ln(self, x):
 		pass
-#TODO
-#add derivative
+
+	@abc.abstractmethod
+	def der(self, function, x, precision):
+		pass
+	
 
 class calc(abstractCalc):
 
@@ -35,10 +32,22 @@ class calc(abstractCalc):
 	def divide(self, x, y):
 		self.isIntOrFloat(x)
 		self.isIntOrFloat(y)
+		self.isZero(y)
 		return x/y
 	
 	def ln(self, x):
+		self.isIntOrFloat(x)
+		self.isZero(x)
+		self.isNegative(x)
 		return math.log(x)
+
+	def der(self, function, x, precision):
+		pass
+		
+
+	def isNegative(self, x):
+		if x < 0:
+			raise negativeNumber()
 
 	def isZero(self, x):
 		if x == 0:
@@ -46,7 +55,7 @@ class calc(abstractCalc):
 	
 	def isIntOrFloat(self, x):
 		if not isinstance(x,(int, float)):
-			raise notIntNotFloat()
+			raise notIntNorFloat()
 
 
 
