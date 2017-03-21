@@ -14,7 +14,7 @@ class abstractCalc(object):
 		pass
 
 	@abc.abstractmethod
-	def ln(self, x):
+	def ln(self, x): 
 		pass
 
 	@abc.abstractmethod
