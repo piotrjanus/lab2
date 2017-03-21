@@ -1,7 +1,8 @@
 import unittest
+import mock
+
 from pycalc import calc
 from calcExceptions import *
-
 
 class test_calc(unittest.TestCase):
 
@@ -21,11 +22,15 @@ class test_calc(unittest.TestCase):
 	def test_ln_from_negative_number(self):
 		self.assertRaises(negativeNumber, self.c.ln, -2)
 
-	def test_derivative(self):
+	def test_derivative_when_no_function_is_given(self):
+		self.assertRaises(notFunction, self.c.der, 2, 2, 2)
+
+	@mock.patch('pycalc.calc.der', return_value=1)
+	def test_derivative_for_long_calculations(self, mock_der):
 		def f(x):
-			return x**3 + x**2
-		self.c.der(f, 5, 1e-6)
-		self.assertEqual(2,2)
+			pass
+		expected_value=1
+		self.assertEqual(calc.der(f,0,0.001),expected_value)
 
 if __name__ == '__main__':
 	unittest.main()

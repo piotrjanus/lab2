@@ -1,7 +1,9 @@
 import abc
-from math import log
-from calcExceptions import *
 from scipy.misc import derivative
+from math import log
+from inspect import isfunction
+
+from calcExceptions import *
 
 class abstractCalc(object):
 	__metaclass__  = abc.ABCMeta
@@ -42,8 +44,16 @@ class calc(abstractCalc):
 		return math.log(x)
 
 	def der(self, function, x, precision):
+		self.isIntOrFloat(x)
+		self.isZero(precision)
+		self.isNegative(precision)
+		self.isFunction(function)
+		return derivative(function, x, precision)
 		pass
 		
+	def isFunction(self, f):
+		if not isfunction(f):
+			raise notFunction()
 
 	def isNegative(self, x):
 		if x < 0:

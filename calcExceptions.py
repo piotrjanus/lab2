@@ -1,3 +1,7 @@
+class notFunction(Exception):
+	def __str__(self):
+		return repr("not a function")
+
 class notIntNorFloat(Exception):
 	def __str__(self):
 		return repr("not int nor float")
